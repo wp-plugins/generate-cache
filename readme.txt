@@ -6,11 +6,11 @@ Requires at least: 3.2
 Tested up to: 3.2
 Stable tag: 0.1
 
-Use only together with caching plugins.
-
-When your cache is emptied (say, upon a new post or comment publication, or if you delete it manually after website changes), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached to be rapidly served to visitors.
+Rebuilds cache when it is automatically emptied by new post or comment publication. 
 
 == Description ==
+
+When your cache is emptied (say, upon a new post or comment publication, or if you delete it manually after website changes), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached to be rapidly served to visitors.
 
 **How this works:**
 
@@ -21,6 +21,8 @@ Let's say you've got a caching plugin installed on your blog (Hyper Cache, WP Su
 * Keeps track of your cache folder size so that it never drops below a certain limit.   
 * Tries to guess your cache folder location, or you can specify it manually.   
 * Choose for which blog items (posts, categories, tags, pages) cache should be regenerated.   
+
+Note: This is not a caching plugin! It is to be used only together with such.
 
 Links: [Author's Site](http://www.denisbuka.ru)
 
