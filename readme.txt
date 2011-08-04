@@ -16,9 +16,9 @@ When your cache is emptied (say, upon a new post or comment publication, or if y
 
 **Benefits:**
 
-* Have your cache always prebuild for better search rankings, since page loading time is a significant SEO factor.     
-* Quickly serve cached pages to visitors.
-* Never worry about prebuilding your cache manually.     
+* Have your cache always prebuild for better search rankings, since page loading time is a significant SEO factor.   
+* Quickly serve cached pages to visitors.   
+* Never worry about prebuilding your cache manually.   
 
 **Features overview:**
 
