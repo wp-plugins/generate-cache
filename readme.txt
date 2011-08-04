@@ -12,9 +12,7 @@ Rebuilds cache when it is automatically emptied by new post or comment publicati
 
 When your cache is emptied (say, upon a new post or comment publication, or if you delete it manually after website changes), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached to be rapidly served to visitors.
 
-**How this works:**
-
-Let's say you've got a caching plugin installed on your blog (Hyper Cache, WP Super Cache, W3 Total Cache or what have you). When new content is added (posts, pages, comments, etc.) the cache is automatically deleted. But your entire blog will only be cached when somebody re-visits every single page. Generate Cache plugin keeps track of your cache directory and if its size drops below the value you specify, new cache for your entire blog will be automatically regenerated. You can choose which blog items should be taken into account: posts, categories, tags, pages and the home page.
+**How this works:** Let's say you've got a caching plugin installed on your blog (Hyper Cache, WP Super Cache, W3 Total Cache or what have you). When new content is added (posts, pages, comments, etc.) the cache is automatically deleted. But your entire blog will only be cached when somebody re-visits every single page. Generate Cache plugin keeps track of your cache directory and if its size drops below the value you specify, new cache for your entire blog will be automatically regenerated. You can choose which blog items should be taken into account: posts, categories, tags, pages and the home page.
 
 **Features overview:**
 
@@ -34,7 +32,11 @@ Links: [Author's Site](http://www.denisbuka.ru)
 
 == Frequently Asked Questions ==
 
-None so far.
+= What kind of script actions are behind this plugin? =
+When there is no cache for some page, a script is executed which determines the size of the cache directory and compares it to the limit you specify. If the limit is not reached, a background process is triggered getting the contents of every blog item (post, page, category, tag, home) so that new cache is generated. After all pages have been called, the process is terminated.
+
+= How long will it take to generate cache for my entire site? =
+All pages are called within 1-2 second intervals. So if your blog has 100 pages, its full cache will be generated in about 100-200 seconds.
 
 == Upgrade Notice ==
 
