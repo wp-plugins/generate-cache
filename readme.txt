@@ -14,12 +14,14 @@ When your cache is emptied (say, upon a new post or comment publication, or if y
 
 **How this works:** Let's say you've got a caching plugin installed on your blog (Hyper Cache, WP Super Cache, W3 Total Cache or what have you). When new content is added (posts, pages, comments, etc.) the cache is automatically deleted. But your entire blog will only be cached when somebody re-visits every single page. Generate Cache plugin keeps track of your cache directory and if its size drops below the value you specify, new cache for your entire blog will be automatically regenerated. You can choose which blog items should be taken into account: posts, categories, tags, pages and the home page.
 
-**Benefits:**   
+**Benefits:**
+
 * Have your cache always prebuild for better search rankings, since page loading time is a significant SEO factor.     
 * Quickly serve cached pages to visitors.
 * Never worry about prebuilding your cache manually.     
 
-**Features overview:**   
+**Features overview:**
+
 * Keeps track of your cache folder size so that it never drops below a certain limit.   
 * Tries to guess your cache folder location, or you can specify it manually.   
 * Choose for which blog items (posts, categories, tags, pages) cache should be regenerated.   
