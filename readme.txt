@@ -1,21 +1,24 @@
 === Generate Cache ===
 Contributors: Denis Buka
 Donate link: http://www.denisbuka.ru
-Tags: cache, generate, trigger, spawn
+Tags: cache, generate, maintenance, construction, trigger, spawn
 Requires at least: 3.2
 Tested up to: 3.2
 Stable tag: 0.1
 
-Rebuilds cache when it is automatically emptied by new post or comment publication. 
+Makes sure your entire website is fully cached at all times. Can be used when performing website maintenance/construction.
 
 == Description ==
 
 When your cache is emptied (say, upon a new post or comment publication, or if you delete it manually after website changes), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached to be rapidly served to visitors.
 
+You can also use this plugin when performing website construction, design or maintenance, so that only cached pages are served to visitors.
+
 **How this works:** Let's say you've got a caching plugin installed on your blog (Hyper Cache, WP Super Cache, W3 Total Cache or what have you). When new content is added (posts, pages, comments, etc.) the cache is automatically deleted. But your entire blog will only be cached when somebody re-visits every single page. Generate Cache plugin keeps track of your cache directory and if its size drops below the value you specify, new cache for your entire blog will be automatically regenerated. You can choose which blog items should be taken into account: posts, categories, tags, pages and the home page.
 
 **Benefits:**   
 
+* Perform website maintenance/construction while serving cached pages to visitors.   
 * Have your cache always prebuild for better search rankings, since page loading time is a significant SEO factor.   
 * Quickly serve cached pages to visitors.   
 * Never worry about prebuilding your cache manually.   
