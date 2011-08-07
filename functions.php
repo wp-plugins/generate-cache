@@ -1,4 +1,16 @@
 <?php
+function initCache() {
+	$genflag = WP_PLUGIN_DIR . '/generate-cache/generation_running';
+	touch( $genflag );
+	$links = getCacheLinks();
+	$options = get_option('gen_cache_options');
+	$options['gen_cache_cur_cache_dir'] = $links[0];
+	update_option( 'gen_cache_options', $options );
+	$url = WP_PLUGIN_URL . '/generate-cache/run1.php';
+	$params = array( 'count' => 0 );
+	$asynchronous_call = curl_post_async( $url, $params );
+}
+
 function get_data($url) {
 	$ch = curl_init();
 	$timeout = 5;

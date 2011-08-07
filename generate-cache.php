@@ -3,7 +3,7 @@
 Plugin Name: Generate Cache
 Plugin URI: http://www.denisbuka.ru/generate-cache/
 Description: When your cache is emptied (say, upon a new post or comment publication), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached for quicker access.
-Version: 0.1
+Version: 0.2
 Author: Denis Buka
 Author URI: http://www.denisbuka.ru
 
@@ -13,6 +13,10 @@ This program is free software; you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public Licensealong with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+
+
+require_once( dirname(__FILE__) . '/functions.php' );
 
 register_activation_hook(__FILE__, 'gen_cache_add_defaults');
 register_uninstall_hook(__FILE__, 'gen_cache_delete_plugin_options');
@@ -37,7 +41,10 @@ function gen_cache_add_defaults() {
 						"gen_cache_dir" => "",
 						"gen_cache_cur_cache_dir" => "",
 						"gen_cache_final_dir" => "",
-						"gen_cache_user_dir" => ""
+						"gen_cache_user_dir" => "",
+						"gen_cache_time_hr" => "",
+						"gen_cache_time_min" => "",
+						"gen_cache_freq" => ""
 		);
 		update_option('gen_cache_options', $arr);
 	}
@@ -62,6 +69,7 @@ function gen_cache_render_form() {
 		<form method="post" action="options.php">
 			<?php settings_fields('gen_cache_plugin_options'); ?>
 			<?php $options = get_option('gen_cache_options'); ?>
+
 
 			<table class="form-table">
 
@@ -113,6 +121,24 @@ function gen_cache_render_form() {
 					</td>
 				</tr>
 				
+				<tr>
+					<th scope="row" style="width:270px;"><strong>Schedule cache generation:</strong><br /><em>(you can optionally schedule cache generation to run at a specific time even if cache folder size is above limit)</em></th>
+					<td>
+						<label>
+							<em>Start at</em>&nbsp;&nbsp;
+							<input style="text-align:right;width:25px;" type="text" size="2" name="gen_cache_options[gen_cache_time_hr]" value="<?php echo $options['gen_cache_time_hr']; ?>" />&nbsp;:&nbsp;<input style="text-align:right;width:25px;" type="text" size="2" name="gen_cache_options[gen_cache_time_min]" value="<?php echo $options['gen_cache_time_min']; ?>" />
+							&nbsp;&nbsp;<em>and run</em>&nbsp;&nbsp;
+						</label>
+
+						<select name='gen_cache_options[gen_cache_freq]'>
+							<option value='hourly' <?php selected('hourly', $options['gen_cache_freq']); ?>>Hourly</option>
+							<option value='twicedaily' <?php selected('twicedaily', $options['gen_cache_freq']); ?>>Twice daily</option>
+							<option value='daily' <?php selected('daily', $options['gen_cache_freq']); ?>>Daily</option>
+						</select>&nbsp;&nbsp;&nbsp;<em>(example: 15:30)</em>
+						<br /><span><em>(leave blank to disable)</em></span>
+					</td>
+				</tr>
+
 			</table>
 			<?php 	
 				$options['gen_cache_final_dir'] = $options['gen_cache_dir'];
@@ -127,7 +153,26 @@ function gen_cache_render_form() {
 	<?php	
 }
 
+add_action( 'gen_cache_hook', 'gen_cache_hook' );
+function gen_cache_hook() {
+	initCache();
+}
+
 function gen_cache_validate_options($input) {
+	if( ( trim( $input['gen_cache_time_hr'] ) != "" ) && ( trim( $input['gen_cache_time_min'] ) != "" ) ) {
+		$now = time();
+		$start = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
+
+		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
+		wp_unschedule_event($timestamp, 'gen_cache_hook' );
+		
+		if (!wp_next_scheduled('gen_cache_hook')) {
+			wp_schedule_event( $start, $input['gen_cache_freq'], 'gen_cache_hook' );
+		}
+	} else {
+		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
+		wp_unschedule_event($timestamp, 'gen_cache_hook' );
+	}
 	return $input;
 }
 
@@ -141,8 +186,6 @@ function gen_cache_plugin_action_links( $links, $file ) {
 
 	return $links;
 }
-
-require_once( dirname(__FILE__) . '/functions.php' );
 
 add_action('wp_footer', 'triggerCache');
 function triggerCache() {
@@ -160,13 +203,7 @@ function triggerCache() {
 		} else {
 			if ( dirSize( $options['gen_cache_final_dir'] ) < $options['gen_cache_size'] ) {
 				echo "<!-- Let's generate some cache! -->";
-				touch( $genflag );
-				$links = getCacheLinks();
-				$options['gen_cache_cur_cache_dir'] = $links[0];
-				update_option( 'gen_cache_options', $options );
-				$url = WP_PLUGIN_URL . '/generate-cache/run1.php';
-				$params = array( 'count' => 0 );
-				$asynchronous_call = curl_post_async( $url, $params );
+				initCache();
 			} else {
 			echo "<!-- Cache size is sufficient... -->";
 			}
