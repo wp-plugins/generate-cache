@@ -162,7 +162,6 @@ function gen_cache_validate_options($input) {
 	if( ( trim( $input['gen_cache_time_hr'] ) != "" ) && ( trim( $input['gen_cache_time_min'] ) != "" ) ) {
 		$now = time() + get_option('gmt_offset') * 3600;
 		$midnight = $now - ( $now%86400 );
-		$now_time = $now%86400;
 		$converted = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
 		if( $converted > $now ) {
 			$start = $converted;
