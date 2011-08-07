@@ -122,7 +122,7 @@ function gen_cache_render_form() {
 				</tr>
 				
 				<tr>
-					<th scope="row" style="width:270px;"><strong>Schedule cache generation:</strong><br /><em>(you can optionally schedule cache generation to run at a specific time even if cache folder size is above limit)</em></th>
+					<th scope="row" style="width:270px;"><strong>Schedule cache generation:</strong><br /><em>(you can optionally schedule cache generation to be run periodically even if cache folder size is above limit)</em></th>
 					<td>
 						<label>
 							<em>Start at</em>&nbsp;&nbsp;
