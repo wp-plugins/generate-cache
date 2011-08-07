@@ -134,7 +134,7 @@ function gen_cache_render_form() {
 							<option value='hourly' <?php selected('hourly', $options['gen_cache_freq']); ?>>Hourly</option>
 							<option value='twicedaily' <?php selected('twicedaily', $options['gen_cache_freq']); ?>>Twice daily</option>
 							<option value='daily' <?php selected('daily', $options['gen_cache_freq']); ?>>Daily</option>
-						</select>&nbsp;&nbsp;&nbsp;<em>(example: 15:30)</em>
+						</select>&nbsp;&nbsp;&nbsp;<em>(examples: 15:30, 03:55, 00:15)</em>
 						<br /><span><em>(leave blank to disable)</em></span>
 					</td>
 				</tr>
@@ -160,14 +160,23 @@ function gen_cache_hook() {
 
 function gen_cache_validate_options($input) {
 	if( ( trim( $input['gen_cache_time_hr'] ) != "" ) && ( trim( $input['gen_cache_time_min'] ) != "" ) ) {
-		$now = time();
-		$start = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
+		$now = time() + get_option('gmt_offset') * 3600;
+		$midnight = $now - ( $now%86400 );
+		$now_time = $now%86400;
+		$converted = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
+		if( $converted > $now ) {
+			$start = $converted;
+		} else {
+			$start = $midnight + ( $converted%86400 ) + 86400;
+		}
+		$start = $start - get_option('gmt_offset') * 3600;
+		//$start = $now;
 
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
 		wp_unschedule_event($timestamp, 'gen_cache_hook' );
 		
 		if (!wp_next_scheduled('gen_cache_hook')) {
-			wp_schedule_event( $start - get_option('gmt_offset') * 3600, $input['gen_cache_freq'], 'gen_cache_hook' );
+			wp_schedule_event( $start/* - get_option('gmt_offset') * 3600*/, $input['gen_cache_freq'], 'gen_cache_hook' );
 		}
 	} else {
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
