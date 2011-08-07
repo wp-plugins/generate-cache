@@ -167,7 +167,7 @@ function gen_cache_validate_options($input) {
 		wp_unschedule_event($timestamp, 'gen_cache_hook' );
 		
 		if (!wp_next_scheduled('gen_cache_hook')) {
-			wp_schedule_event( $start, $input['gen_cache_freq'], 'gen_cache_hook' );
+			wp_schedule_event( $start - get_option('gmt_offset') * 3600, $input['gen_cache_freq'], 'gen_cache_hook' );
 		}
 	} else {
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
