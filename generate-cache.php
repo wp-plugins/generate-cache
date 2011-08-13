@@ -160,22 +160,25 @@ function gen_cache_hook() {
 
 function gen_cache_validate_options($input) {
 	if( ( trim( $input['gen_cache_time_hr'] ) != "" ) && ( trim( $input['gen_cache_time_min'] ) != "" ) ) {
-		$now = time() + get_option('gmt_offset') * 3600;
+		$offset = get_option('gmt_offset') * 3600;
+		$now = time();
 		$midnight = $now - ( $now%86400 );
 		$converted = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
-		if( $converted > $now ) {
+		//$converted = $converted%86400 + $midnight;
+		if( $converted%86400 == 0 ) {
+			$start = $midnight + ( $converted%86400 ) + 86400;
+		} elseif( ( $converted - $offset ) > $now ) {
 			$start = $converted;
 		} else {
 			$start = $midnight + ( $converted%86400 ) + 86400;
 		}
-		$start = $start - get_option('gmt_offset') * 3600;
-		//$start = $now;
+		$start = $start - $offset;
 
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
 		wp_unschedule_event($timestamp, 'gen_cache_hook' );
 		
 		if (!wp_next_scheduled('gen_cache_hook')) {
-			wp_schedule_event( $start/* - get_option('gmt_offset') * 3600*/, $input['gen_cache_freq'], 'gen_cache_hook' );
+			wp_schedule_event( $start, $input['gen_cache_freq'], 'gen_cache_hook' );
 		}
 	} else {
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
