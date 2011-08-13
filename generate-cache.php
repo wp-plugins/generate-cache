@@ -3,7 +3,7 @@
 Plugin Name: Generate Cache
 Plugin URI: http://www.denisbuka.ru/generate-cache/
 Description: When your cache is emptied (say, upon a new post or comment publication), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached for quicker access.
-Version: 0.2
+Version: 0.3
 Author: Denis Buka
 Author URI: http://www.denisbuka.ru
 
@@ -38,8 +38,8 @@ function gen_cache_add_defaults() {
 						"gen_cache_cats" => "1",
 						"gen_cache_tags" => "1",
 						"gen_cache_pages" => "1",
+						"gen_cache_speed" => "1",
 						"gen_cache_dir" => "",
-						"gen_cache_cur_cache_dir" => "",
 						"gen_cache_final_dir" => "",
 						"gen_cache_user_dir" => "",
 						"gen_cache_time_hr" => "",
@@ -122,6 +122,13 @@ function gen_cache_render_form() {
 				</tr>
 				
 				<tr>
+					<th scope="row" style="width:270px;"><strong>Caching speed:</strong><br /><em>(interval between subsequent page calls)</em></th>
+					<td>
+						<label><input style="text-align:right;" type="text" size="4" name="gen_cache_options[gen_cache_speed]" value="<?php echo $options['gen_cache_speed']; ?>" /> seconds&nbsp;&nbsp;&nbsp;<em>&ndash; <strong>Warning:</strong> setting this to less than a second may impede your server's performance!</em></label>
+					</td>
+				</tr>
+
+				<tr>
 					<th scope="row" style="width:270px;"><strong>Schedule cache generation:</strong><br /><em>(you can optionally schedule cache generation to be run periodically even if cache folder size is above limit)</em></th>
 					<td>
 						<label>
@@ -148,6 +155,26 @@ function gen_cache_render_form() {
 			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 			</p>
 		</form>
+						
+		<?php
+		if( isset( $_POST['gen_cache_now'] ) ) initCache();
+
+		$genflag = WP_PLUGIN_DIR . '/generate-cache/generation_running';
+		if( isset( $_POST['gen_cache_abort'] ) ) unlink( $genflag );;
+		if( file_exists( $genflag ) ) { 
+			echo '	<form method="post">
+						<p class="submit"><strong>Cache generation is now in progress...</strong>&nbsp;&nbsp;&nbsp;
+						<input type="submit" name="gen_cache_abort" value="Abort" />
+						</p>
+					</form>';
+		} else {
+			echo '	<form method="post">
+						<p class="submit">You can start cache generation manually by hitting this button:&nbsp;&nbsp;&nbsp;
+						<input type="submit" name="gen_cache_now" value="Generate cache now!" />
+						</p>
+					</form>';
+		}
+		?>
 
 	</div>
 	<?php	
@@ -160,22 +187,22 @@ function gen_cache_hook() {
 
 function gen_cache_validate_options($input) {
 	if( ( trim( $input['gen_cache_time_hr'] ) != "" ) && ( trim( $input['gen_cache_time_min'] ) != "" ) ) {
-		$now = time() + get_option('gmt_offset') * 3600;
+		$offset = get_option('gmt_offset') * 3600;
+		$now = time();
 		$midnight = $now - ( $now%86400 );
 		$converted = strtotime( trim( $input['gen_cache_time_hr'] ) . ":" . trim( $input['gen_cache_time_min'] ) );
+		$converted = ($converted - $offset)%86400 + $midnight;
 		if( $converted > $now ) {
 			$start = $converted;
 		} else {
 			$start = $midnight + ( $converted%86400 ) + 86400;
 		}
-		$start = $start - get_option('gmt_offset') * 3600;
-		//$start = $now;
 
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );
 		wp_unschedule_event($timestamp, 'gen_cache_hook' );
 		
 		if (!wp_next_scheduled('gen_cache_hook')) {
-			wp_schedule_event( $start/* - get_option('gmt_offset') * 3600*/, $input['gen_cache_freq'], 'gen_cache_hook' );
+			wp_schedule_event( $start, $input['gen_cache_freq'], 'gen_cache_hook' );
 		}
 	} else {
 		$timestamp = wp_next_scheduled( 'gen_cache_hook' );

@@ -10,7 +10,14 @@ function initCache() {
 	$params = array( 'count' => 0 );
 	$asynchronous_call = curl_post_async( $url, $params );
 }
-
+function slaap($seconds) { 
+	$seconds = abs($seconds); 
+	if ($seconds < 1): 
+		usleep($seconds*1000000); 
+	else: 
+		sleep($seconds); 
+	endif;    
+}
 function get_data($url) {
 	$ch = curl_init();
 	$timeout = 5;

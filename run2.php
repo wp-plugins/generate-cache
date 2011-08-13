@@ -11,9 +11,11 @@ if( isset( $_POST["count"] ) ) {
 }
 
 $links = getCacheLinks();
+$options = get_option('gen_cache_options');
+
 
 $contents = get_data( $links[$count] );
-sleep(1);
+slaap( $options['gen_cache_speed'] );
 unset( $contents );
 
 $count++;
