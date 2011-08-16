@@ -29,8 +29,13 @@ You can also use this plugin when performing website construction, design or mai
 * Tries to guess your cache folder location, or you can specify it manually.   
 * Choose for which blog items (posts, categories, tags, pages) cache should be regenerated.   
 
-
 Note: This is not a caching plugin! It is to be used only together with such.
+
+
+**My other plugins:**   
+
+* Intuitive Navigation (http://wordpress.org/extend/plugins/intuitive-navigation/)   
+* Drop in Dropbox (http://wordpress.org/extend/plugins/drop-in-dropbox/)   
 
 Links: [Author's Site](http://www.denisbuka.ru)
 
