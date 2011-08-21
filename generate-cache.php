@@ -160,7 +160,7 @@ function gen_cache_render_form() {
 		if( isset( $_POST['gen_cache_now'] ) ) initCache();
 
 		$genflag = WP_PLUGIN_DIR . '/generate-cache/generation_running';
-		if( isset( $_POST['gen_cache_abort'] ) ) unlink( $genflag );;
+		if( isset( $_POST['gen_cache_abort'] ) ) unlink( $genflag );
 		if( file_exists( $genflag ) ) { 
 			echo '	<form method="post">
 						<p class="submit"><strong>Cache generation is now in progress...</strong>&nbsp;&nbsp;&nbsp;
