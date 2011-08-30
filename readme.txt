@@ -4,7 +4,7 @@ Donate link: http://www.denisbuka.ru
 Tags: cache, generate, maintenance, construction, trigger, spawn
 Requires at least: 3.2
 Tested up to: 3.2
-Stable tag: 0.1
+Stable tag: 0.3
 
 Makes sure your entire website is fully cached at all times. Can be used when performing website maintenance/construction.
 
@@ -27,15 +27,13 @@ You can also use this plugin when performing website construction, design or mai
 
 * Keeps track of your cache folder size so that it never drops below a certain limit.   
 * Tries to guess your cache folder location, or you can specify it manually.   
-* Choose for which blog items (posts, categories, tags, pages) cache should be regenerated.   
+* Choose for which blog items (posts, categories, tags, pages) cache should be regenerated. 
+* Set cache generation interval.   
+* Schedule automatic cache generation to be run at a specific time even if cache folder size is not below limit (in case your caching plugin doesn't emply cache upon content changes).   
+* Manually start/abort cache generation from the admin page.   
+
 
 Note: This is not a caching plugin! It is to be used only together with such.
-
-
-**My other plugins:**   
-
-* Intuitive Navigation (http://wordpress.org/extend/plugins/intuitive-navigation/)   
-* Drop in Dropbox (http://wordpress.org/extend/plugins/drop-in-dropbox/)   
 
 Links: [Author's Site](http://www.denisbuka.ru)
 
@@ -57,7 +55,16 @@ All pages are called within 1-2 second intervals. So if your blog has 100 pages,
 
 == Screenshots ==
 
+1. Settings admin page   
+
 == Changelog ==
+
+= 0.3 =
+* Minor code fixes
+* Added manual cache generate/abort
+
+= 0.2 =
+* Added scheduling feature
 
 = 0.1 =
 * Initial release
