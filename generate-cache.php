@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin Name: Generate Cache
-Plugin URI: http://www.denisbuka.ru/generate-cache/
+Plugin URI: http://steamingkettle.net/web-design/wordpress-plugins/
 Description: When your cache is emptied (say, upon a new post or comment publication), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached for quicker access.
 Version: 0.3
 Author: Denis Buka
-Author URI: http://www.denisbuka.ru
+Author URI: http://steamingkettle.net
 
-Copyright (C) 2011 www.denisbuka.ru
+Copyright (C) 2011 SteamingKettle.net
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.

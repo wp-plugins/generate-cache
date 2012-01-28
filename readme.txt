@@ -1,6 +1,6 @@
 === Generate Cache ===
 Contributors: Denis Buka
-Donate link: http://www.denisbuka.ru
+Donate link: http://steamingkettle.net
 Tags: cache, generate, maintenance, construction, trigger, spawn
 Requires at least: 3.2
 Tested up to: 3.2
@@ -40,7 +40,7 @@ Note: This is not a caching plugin! It is to be used only together with such.
 * Intuitive Navigation (http://wordpress.org/extend/plugins/intuitive-navigation/)   
 * Drop in Dropbox (http://wordpress.org/extend/plugins/drop-in-dropbox/)   
 
-Links: [Author's Site](http://www.denisbuka.ru)
+Links: [Steaming Kettle Website Design & Video Production Studio](http://steamingkettle.net)
 
 == Installation ==
 
