@@ -3,7 +3,7 @@
 Plugin Name: Generate Cache
 Plugin URI: http://steamingkettle.net/web-design/wordpress-plugins/
 Description: When your cache is emptied (say, upon a new post or comment publication), the plugin loops through selected items (posts, categories, tags or pages) and makes sure you have them all freshly cached for quicker access.
-Version: 0.3
+Version: 0.4
 Author: Denis Buka
 Author URI: http://steamingkettle.net
 

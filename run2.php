@@ -1,5 +1,5 @@
 <?php
-require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+require_once( '../../../wp-load.php' );
 require_once( dirname(__FILE__) . '/functions.php' );
 
 set_time_limit(3600); 

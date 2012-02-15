@@ -4,7 +4,7 @@ Donate link: http://steamingkettle.net
 Tags: cache, generate, maintenance, construction, trigger, spawn
 Requires at least: 3.2
 Tested up to: 3.2
-Stable tag: 0.3
+Stable tag: 0.4
 
 Makes sure your entire website is fully cached at all times. Can be used when performing website maintenance/construction.
 
@@ -63,6 +63,9 @@ All pages are called within 1-2 second intervals. So if your blog has 100 pages,
 1. Settings admin page   
 
 == Changelog ==
+
+= 0.4 =
+* Error fixes
 
 = 0.3 =
 * Minor code fixes
